@@ -1,24 +1,31 @@
-import { Button } from "antd";
 import React from "react";
-import { useToggle } from "react-use";
+import styled from "styled-components";
 import BookForm from "../components/BookForm";
 import { Calendar } from "../components/Calendar";
 
-function Home() {
-  const [show, toggle] = useToggle(false);
+const Bloc = styled.div`
+  margin-bottom: 3vh !important;
+`;
+const Title = styled.div`
+  font-size: 2rem !important;
+  margin-bottom: 1vh !important;
+`;
 
+const FormContainer = styled.div`
+  max-width: 50%;
+  margin: auto;
+`;
+
+function Home() {
   return (
     <>
-      <Calendar />
-      <Button
-        size="large"
-        type="primary"
-        onClick={toggle}
-        style={{ marginTop: "3vh", marginBottom: "3vh" }}
-      >
-        Réserver
-      </Button>
-      <BookForm show={show} />
+      <Bloc>
+        <Calendar />
+      </Bloc>
+      <FormContainer>
+        <Title>Réserver</Title>
+        <BookForm />
+      </FormContainer>
     </>
   );
 }

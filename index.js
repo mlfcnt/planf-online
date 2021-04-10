@@ -1,7 +1,13 @@
 const { GraphQLApp } = require("@keystonejs/app-graphql");
 const { AdminUIApp } = require("@keystonejs/app-admin-ui");
 const { NextApp } = require("@keystonejs/app-next");
-const { Text, Checkbox, Password, DateTime } = require("@keystonejs/fields");
+const {
+  Text,
+  Checkbox,
+  Password,
+  DateTime,
+  CalendarDay,
+} = require("@keystonejs/fields");
 
 const { PROJECT_NAME } = require("./config/general");
 const { keystone } = require("./config/general");
@@ -58,24 +64,23 @@ keystone.createList("User", {
 
 keystone.createList("Booking", {
   fields: {
-    who: { type: Text },
+    who: { type: Text, isRequired: true },
     startDate: {
-      type: DateTime,
-      format: "dd/MM/yyyy HH:mm O",
+      type: CalendarDay,
+      isRequired: true,
     },
     endDate: {
-      type: DateTime,
-      format: "dd/MM/yyyy HH:mm O",
+      type: CalendarDay,
+      isRequired: true,
     },
     validated: {
       type: Checkbox,
+      defaultValue: false,
     },
   },
   // List-level access controls
   access: {
-    read: access.userIsAdminOrOwner,
     update: access.userIsAdminOrOwner,
-    create: access.userIsAdmin,
     delete: access.userIsAdmin,
     auth: true,
   },

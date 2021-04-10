@@ -1,6 +1,7 @@
-import "../styles.css";
-import "@zach.codes/react-calendar/dist/calendar-tailwind.css";
 import "antd/dist/antd.css";
+import "../styles.css";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+
 import { MainLayout } from "../Layout/MainLayout";
 
 const MyApp = ({ Component, pageProps }) => {

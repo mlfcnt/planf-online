@@ -1,50 +1,60 @@
 import React from "react";
-import { Form, Input, Button, Radio } from "antd";
-import RangePicker from "./RangePicker";
+import { Form, Input, Button, DatePicker } from "antd";
+import { saveBooking } from "../api/bookings";
+import moment from "moment";
 
-function BookForm({ show }) {
-  const onFinish = (values) => {
-    console.log("Success:", values);
-  };
-
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
+function BookForm() {
+  const onFinish = ({ who, startDate, endDate }) =>
+    saveBooking({
+      who,
+      startDate: moment(startDate).format("yyyy-MM-DD"),
+      endDate: moment(endDate).format("yyyy-MM-DD"),
+    });
 
   return (
-    show && (
-      <Form name="basic" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-        <Form.Item
-          label="Qui"
-          name="who"
-          rules={[
-            {
-              required: true,
-              message: "Veuillez préciser qui passe la réservation",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="Durée"
-          name="range"
-          rules={[
-            {
-              required: true,
-              message: "Veuillez préciser les dates d'arrivée et départ",
-            },
-          ]}
-        >
-          <RangePicker />
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Envoyer
-          </Button>
-        </Form.Item>
-      </Form>
-    )
+    <Form name="basic" onFinish={onFinish}>
+      <Form.Item
+        label="Qui"
+        name="who"
+        rules={[
+          {
+            required: true,
+            message: "Veuillez préciser qui passe la réservation",
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        label="Arrivée"
+        name="startDate"
+        rules={[
+          {
+            required: true,
+            message: "Veuillez préciser la date d'arrivée",
+          },
+        ]}
+      >
+        <DatePicker placeholder="Date d'arrivée" />
+      </Form.Item>
+      <Form.Item
+        label="Départ"
+        name="endDate"
+        rules={[
+          {
+            required: true,
+            message: "Veuillez préciser la date de départ",
+          },
+        ]}
+      >
+        <DatePicker placeholder="Date de départ" />
+      </Form.Item>
+      <Form.Item>
+        <Button type="primary" htmlType="submit">
+          Envoyer
+        </Button>
+      </Form.Item>
+    </Form>
   );
 }
 
