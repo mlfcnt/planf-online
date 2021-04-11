@@ -3,9 +3,6 @@ import { Form, Button, DatePicker, Select } from "antd";
 import { saveBooking } from "../api/bookings";
 import moment from "moment";
 import { getAllPeople } from "../api/people";
-import "moment/locale/fr";
-import locale from "antd/es/date-picker/locale/fr_FR";
-
 moment.locale("fr");
 
 function BookForm({ addEvent }) {
@@ -72,11 +69,7 @@ function BookForm({ addEvent }) {
           },
         ]}
       >
-        <DatePicker
-          placeholder="Date d'arrivée"
-          format={"DD MMMM"}
-          locale={locale}
-        />
+        <DatePicker placeholder="Date d'arrivée" format={"DD MMMM"} />
       </Form.Item>
       <Form.Item
         label="Départ"
@@ -88,11 +81,7 @@ function BookForm({ addEvent }) {
           },
         ]}
       >
-        <DatePicker
-          placeholder="Date de départ"
-          format={"DD MMMM"}
-          locale={locale}
-        />
+        <DatePicker placeholder="Date de départ" format={"DD MMMM"} />
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
