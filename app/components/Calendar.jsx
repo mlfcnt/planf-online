@@ -31,16 +31,14 @@ export const Calendar = ({ events }) => {
   };
 
   return (
-    <div>
-      <BigCalendar
-        localizer={localizer}
-        events={events}
-        views={["month"]}
-        style={{ height: 500 }}
-        messages={messages}
-        popup
-        eventPropGetter={eventStyleGetter}
-      />
-    </div>
+    <BigCalendar
+      localizer={localizer}
+      events={events}
+      views={["month"]}
+      style={{ height: 500 }}
+      messages={messages}
+      popup
+      eventPropGetter={eventStyleGetter}
+    />
   );
 };

@@ -19,6 +19,7 @@ function BookForm({ addEvent }) {
       startDate: moment(startDate).format("yyyy-MM-DD"),
       endDate: moment(endDate).format("yyyy-MM-DD"),
     };
+    window.location.reload();
     form.resetFields();
     addEvent(newEvent);
     saveBooking(newEvent);
