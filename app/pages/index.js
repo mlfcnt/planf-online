@@ -3,8 +3,6 @@ import styled from "styled-components";
 import { getAllBookings } from "../api/bookings";
 import BookForm from "../components/BookForm";
 import { Calendar } from "../components/Calendar";
-import randomColor from "randomcolor";
-import { groupBy } from "lodash";
 
 const Bloc = styled.div`
   margin-bottom: 3vh !important;
@@ -22,27 +20,16 @@ const FormContainer = styled.div`
 function Home() {
   const [events, setEvents] = useState([]);
   const { loading, error, allBookings } = getAllBookings();
-
   useEffect(() => {
     if (!allBookings) return;
-    const groupped = groupBy(allBookings, "who");
-    const events = Object.values(groupped);
-    for (const gEvent of events) {
-      const rc = randomColor({ luminosity: "dark" });
-      for (const event of gEvent) {
-        event.color = rc;
-      }
-    }
-
-    const flat = events.flat();
     setEvents(
-      flat.map((e) => ({
+      allBookings.map((e) => ({
         key: e.id,
-        title: `${e.who}`,
+        title: `${e.who.name}`,
         start: e.startDate,
         end: e.endDate,
         allday: true,
-        color: e.color,
+        color: e.who.family.color,
       }))
     );
   }, [allBookings]);

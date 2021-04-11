@@ -1,14 +1,24 @@
-import React from "react";
-import { Form, Input, Button, DatePicker } from "antd";
+import React, { useMemo } from "react";
+import { Form, Button, DatePicker, Select } from "antd";
 import { saveBooking } from "../api/bookings";
 import moment from "moment";
+import { getAllPeople } from "../api/people";
+import "moment/locale/fr";
+import locale from "antd/es/date-picker/locale/fr_FR";
+
+moment.locale("fr");
 
 function BookForm({ addEvent }) {
+  const { isLoading, error, allPeople } = getAllPeople();
   const [form] = Form.useForm();
 
   const onFinish = ({ who, startDate, endDate }) => {
     const newEvent = {
-      who,
+      who: {
+        connect: {
+          id: who,
+        },
+      },
       startDate: moment(startDate).format("yyyy-MM-DD"),
       endDate: moment(endDate).format("yyyy-MM-DD"),
     };
@@ -16,6 +26,21 @@ function BookForm({ addEvent }) {
     addEvent(newEvent);
     saveBooking(newEvent);
   };
+
+  const peopleOptions = useMemo(
+    () =>
+      (allPeople || [])
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((people) => (
+          <Option
+            value={people.id}
+          >{`${people.name} ${people.family.name}`}</Option>
+        )),
+    [allPeople]
+  );
+
+  if (isLoading) return <p>Chargement...</p>;
+  if (error) <p>{error}</p>;
 
   return (
     <Form form={form} name="book" onFinish={onFinish}>
@@ -30,7 +55,12 @@ function BookForm({ addEvent }) {
           },
         ]}
       >
-        <Input />
+        <Select
+          placeholder="Select a option and change input text above"
+          allowClear
+        >
+          {peopleOptions}
+        </Select>
       </Form.Item>
       <Form.Item
         label="Arrivée"
@@ -42,7 +72,11 @@ function BookForm({ addEvent }) {
           },
         ]}
       >
-        <DatePicker placeholder="Date d'arrivée" />
+        <DatePicker
+          placeholder="Date d'arrivée"
+          format={"DD MMMM"}
+          locale={locale}
+        />
       </Form.Item>
       <Form.Item
         label="Départ"
@@ -54,7 +88,11 @@ function BookForm({ addEvent }) {
           },
         ]}
       >
-        <DatePicker placeholder="Date de départ" />
+        <DatePicker
+          placeholder="Date de départ"
+          format={"DD MMMM"}
+          locale={locale}
+        />
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">

@@ -7,6 +7,7 @@ const {
   Password,
   DateTime,
   CalendarDay,
+  Relationship,
 } = require("@keystonejs/fields");
 
 const { PROJECT_NAME } = require("./config/general");
@@ -64,7 +65,11 @@ keystone.createList("User", {
 
 keystone.createList("Booking", {
   fields: {
-    who: { type: Text, isRequired: true },
+    who: {
+      type: Relationship,
+      ref: "Person",
+      many: false,
+    },
     startDate: {
       type: CalendarDay,
       isRequired: true,
@@ -78,6 +83,46 @@ keystone.createList("Booking", {
       defaultValue: false,
     },
   },
+  // List-level access controls
+  access: {
+    update: access.userIsAdminOrOwner,
+    delete: access.userIsAdmin,
+    auth: true,
+  },
+});
+
+keystone.createList("Family", {
+  fields: {
+    name: { type: Text, isRequired: true },
+    members: {
+      type: Relationship,
+      ref: "Person",
+      many: true,
+    },
+    color: {
+      type: Text,
+      isRequired: true,
+    },
+  },
+
+  // List-level access controls
+  access: {
+    update: access.userIsAdminOrOwner,
+    delete: access.userIsAdmin,
+    auth: true,
+  },
+});
+
+keystone.createList("Person", {
+  fields: {
+    name: { type: Text, isRequired: true },
+    family: {
+      type: Relationship,
+      ref: "Family",
+      many: false,
+    },
+  },
+
   // List-level access controls
   access: {
     update: access.userIsAdminOrOwner,

@@ -10,8 +10,8 @@ export const Calendar = ({ events }) => {
   const messages = {
     // new
     allDay: "Toute la journée",
-    previous: "Précédent",
-    next: "Suivant",
+    previous: "Mois précédent",
+    next: "Mois suivant",
     today: "Aujourd'hui",
     month: "Mois",
     week: "Semaine",
