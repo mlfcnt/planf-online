@@ -2,7 +2,6 @@ import { useState, useMemo } from "react";
 import { GET_ALL_BOOKINGS, SAVE_BOOKING } from "./queries";
 
 const defaultFetch = (query, variables = {}) => {
-  console.log({ query, variables });
   return fetch("/admin/api", {
     method: "POST",
     headers: {

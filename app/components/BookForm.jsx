@@ -3,19 +3,26 @@ import { Form, Input, Button, DatePicker } from "antd";
 import { saveBooking } from "../api/bookings";
 import moment from "moment";
 
-function BookForm() {
-  const onFinish = ({ who, startDate, endDate }) =>
-    saveBooking({
+function BookForm({ addEvent }) {
+  const [form] = Form.useForm();
+
+  const onFinish = ({ who, startDate, endDate }) => {
+    const newEvent = {
       who,
       startDate: moment(startDate).format("yyyy-MM-DD"),
       endDate: moment(endDate).format("yyyy-MM-DD"),
-    });
+    };
+    form.resetFields();
+    addEvent(newEvent);
+    saveBooking(newEvent);
+  };
 
   return (
-    <Form name="basic" onFinish={onFinish}>
+    <Form form={form} name="book" onFinish={onFinish}>
       <Form.Item
         label="Qui"
         name="who"
+        initialValue=""
         rules={[
           {
             required: true,
