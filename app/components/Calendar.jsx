@@ -1,10 +1,15 @@
 import { Calendar as BigCalendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "moment/locale/fr";
+import EditEventModal from "./EditEventModal";
+import { useToggle } from "react-use";
+import { useState } from "react";
 
 moment.locale("fr");
 
 export const Calendar = ({ events }) => {
+  const [showEditModal, toggleEditModal] = useToggle(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
   const localizer = momentLocalizer(moment);
 
   const messages = {
@@ -31,14 +36,25 @@ export const Calendar = ({ events }) => {
   };
 
   return (
-    <BigCalendar
-      localizer={localizer}
-      events={events}
-      views={["month"]}
-      style={{ height: 500 }}
-      messages={messages}
-      popup
-      eventPropGetter={eventStyleGetter}
-    />
+    <>
+      <BigCalendar
+        localizer={localizer}
+        events={events}
+        views={["month"]}
+        style={{ height: 500 }}
+        messages={messages}
+        popup
+        eventPropGetter={eventStyleGetter}
+        onSelectEvent={(e) => {
+          setSelectedEvent(e);
+          toggleEditModal();
+        }}
+      />
+      <EditEventModal
+        show={showEditModal}
+        toggle={toggleEditModal}
+        event={selectedEvent}
+      />
+    </>
   );
 };

@@ -2,14 +2,13 @@ import React, { useMemo } from "react";
 import { Form, Button, DatePicker, Select } from "antd";
 import { saveBooking } from "../api/bookings";
 import moment from "moment";
-import { getAllPeople } from "../api/people";
 moment.locale("fr");
 
-function BookForm({ addEvent }) {
-  const { isLoading, error, allPeople } = getAllPeople();
+function BookForm({ allPeople, addEvent, initialValues = {}, isEdit = false }) {
   const [form] = Form.useForm();
 
   const onFinish = ({ who, startDate, endDate }) => {
+    console.log({ who, startDate, endDate });
     const newEvent = {
       who: {
         connect: {
@@ -19,7 +18,8 @@ function BookForm({ addEvent }) {
       startDate: moment(startDate).format("yyyy-MM-DD"),
       endDate: moment(endDate).format("yyyy-MM-DD"),
     };
-    window.location.reload();
+    console.log(who);
+    // window.location.reload();
     form.resetFields();
     addEvent(newEvent);
     saveBooking(newEvent);
@@ -37,15 +37,16 @@ function BookForm({ addEvent }) {
     [allPeople]
   );
 
-  if (isLoading) return <p>Chargement...</p>;
-  if (error) <p>{error}</p>;
-
   return (
-    <Form form={form} name="book" onFinish={onFinish}>
+    <Form
+      form={form}
+      name="book"
+      onFinish={onFinish}
+      initialValues={initialValues}
+    >
       <Form.Item
         label="Qui"
         name="who"
-        initialValue=""
         rules={[
           {
             required: true,
@@ -56,6 +57,7 @@ function BookForm({ addEvent }) {
         <Select
           placeholder="Select a option and change input text above"
           allowClear
+          value={initialValues.who}
         >
           {peopleOptions}
         </Select>
@@ -84,11 +86,13 @@ function BookForm({ addEvent }) {
       >
         <DatePicker placeholder="Date de départ" format={"DD MMMM"} />
       </Form.Item>
-      <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Envoyer
-        </Button>
-      </Form.Item>
+      {!isEdit && (
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Envoyer
+          </Button>
+        </Form.Item>
+      )}
     </Form>
   );
 }

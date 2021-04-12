@@ -1,7 +1,7 @@
 import { defaultFetch, useFetch } from "./base";
 import { GET_ALL_BOOKINGS, SAVE_BOOKING } from "./queries";
 
-export const getAllBookings = () => {
+export const useAllBookings = () => {
   const {
     data: { allBookings },
     loading,

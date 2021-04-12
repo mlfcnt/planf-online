@@ -1,7 +1,7 @@
 import { useFetch } from "./base";
 import { GET_ALL_PEOPLE } from "./queries";
 
-export const getAllPeople = () => {
+export const useAllPeople = () => {
   const {
     data: { allPeople },
     loading,
