@@ -1,9 +1,9 @@
+import React, { useState, useEffect } from "react";
 import { Calendar as BigCalendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "moment/locale/fr";
 import EditEventModal from "./EditEventModal";
 import { useToggle } from "react-use";
-import { useState } from "react";
 
 moment.locale("fr");
 
@@ -13,7 +13,6 @@ export const Calendar = ({ events }) => {
   const localizer = momentLocalizer(moment);
 
   const messages = {
-    // new
     allDay: "Toute la journée",
     previous: "Mois précédent",
     next: "Mois suivant",

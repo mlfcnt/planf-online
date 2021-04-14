@@ -23,6 +23,7 @@ export const GET_ALL_PEOPLE = `
       name
       family {
         name
+        color
       }
     }
   }

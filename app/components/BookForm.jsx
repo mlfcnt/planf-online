@@ -2,13 +2,18 @@ import React, { useMemo } from "react";
 import { Form, Button, DatePicker, Select } from "antd";
 import { saveBooking } from "../api/bookings";
 import moment from "moment";
+import { useAllPeople } from "../api/people";
 moment.locale("fr");
 
-function BookForm({ allPeople, addEvent, initialValues = {}, isEdit = false }) {
+function BookForm({ addEvent, initialValues = {}, isEdit = false }) {
   const [form] = Form.useForm();
+  const {
+    loading: loadingPeople,
+    error: errorPeople,
+    allPeople,
+  } = useAllPeople();
 
   const onFinish = ({ who, startDate, endDate }) => {
-    console.log({ who, startDate, endDate });
     const newEvent = {
       who: {
         connect: {
@@ -18,10 +23,20 @@ function BookForm({ allPeople, addEvent, initialValues = {}, isEdit = false }) {
       startDate: moment(startDate).format("yyyy-MM-DD"),
       endDate: moment(endDate).format("yyyy-MM-DD"),
     };
-    console.log(who);
-    // window.location.reload();
+
+    const people = allPeople.find((x) => x.id === who);
+    const localEvent = {
+      key: who,
+      who,
+      title: people.name,
+      start: moment(startDate).format("yyyy-MM-DD"),
+      end: moment(endDate).format("yyyy-MM-DD"),
+      allDay: true,
+      color: people.family.color,
+    };
+
     form.resetFields();
-    addEvent(newEvent);
+    addEvent(localEvent);
     saveBooking(newEvent);
   };
 
@@ -36,6 +51,9 @@ function BookForm({ allPeople, addEvent, initialValues = {}, isEdit = false }) {
         )),
     [allPeople]
   );
+
+  if (loadingPeople) return <p>Chargement des données...</p>;
+  if (errorPeople) return <p>{error}</p>;
 
   return (
     <Form
@@ -54,11 +72,7 @@ function BookForm({ allPeople, addEvent, initialValues = {}, isEdit = false }) {
           },
         ]}
       >
-        <Select
-          placeholder="Select a option and change input text above"
-          allowClear
-          value={initialValues.who}
-        >
+        <Select placeholder="Qui passe la réservation ?" allowClear>
           {peopleOptions}
         </Select>
       </Form.Item>

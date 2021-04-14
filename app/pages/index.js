@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import styled from "styled-components";
 import { useAllBookings } from "../api/bookings";
-import { useAllPeople } from "../api/people";
 import BookForm from "../components/BookForm";
 import { Calendar } from "../components/Calendar";
 
-const Bloc = styled.div`
+const CalendarContainer = styled.div`
   margin-bottom: 3vh !important;
 `;
 const Title = styled.div`
@@ -25,12 +24,6 @@ function Home() {
     error: errorBookings,
     allBookings,
   } = useAllBookings();
-  console.log("👽CLG - allBookings", allBookings);
-  const {
-    loading: loadingPeople,
-    error: errorPeople,
-    allPeople,
-  } = useAllPeople();
 
   useEffect(() => {
     if (!allBookings) return;
@@ -38,7 +31,7 @@ function Home() {
       allBookings.map((e) => ({
         key: e.id,
         who: e.who.id,
-        title: `${e.who.name}`,
+        title: e.who.name,
         start: e.startDate,
         end: e.endDate,
         allday: true,
@@ -52,17 +45,17 @@ function Home() {
     events,
   ]);
 
-  if (loadingBookings || loadingPeople) return <p>Chargement des données...</p>;
-  if (errorBookings || errorPeople) return <p>{error}</p>;
+  if (loadingBookings) return <p>Chargement des données...</p>;
+  if (errorBookings) return <p>{error}</p>;
 
   return (
     <>
-      <Bloc>
+      <CalendarContainer>
         <Calendar events={events} />
-      </Bloc>
+      </CalendarContainer>
       <FormContainer>
         <Title>Réserver</Title>
-        <BookForm addEvent={addEvent} allPeople={allPeople} />
+        <BookForm addEvent={addEvent} />
       </FormContainer>
     </>
   );

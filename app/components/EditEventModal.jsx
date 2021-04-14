@@ -4,9 +4,19 @@ import BookForm from "./BookForm";
 import moment from "moment";
 
 function EditEventModal({ show, toggle, event }) {
-  const handleOk = () => {};
+  const handleOk = () => {
+    // const newEvent = {
+    //   who: {
+    //     connect: {
+    //       id: who,
+    //     },
+    //   },
+    //   startDate: moment(startDate).format("yyyy-MM-DD"),
+    //   endDate: moment(endDate).format("yyyy-MM-DD"),
+    // };
+    toggle();
+  };
   if (!event) return null;
-  console.log(event);
   return (
     <Modal
       title="Modifier le séjour"
