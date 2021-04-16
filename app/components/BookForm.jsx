@@ -1,19 +1,39 @@
 import React, { useMemo } from "react";
 import { Form, Button, DatePicker, Select } from "antd";
-import { saveBooking } from "../api/bookings";
+import { useSaveBooking, useUpdateBooking } from "../api/bookings";
 import moment from "moment";
 import { useAllPeople } from "../api/people";
 moment.locale("fr");
 
-function BookForm({ addEvent, initialValues = {}, isEdit = false }) {
+function BookForm({ initialValues = {}, eventToEdit = {}, toggleEditModal }) {
   const [form] = Form.useForm();
-  const {
-    loading: loadingPeople,
-    error: errorPeople,
-    allPeople,
-  } = useAllPeople();
+  const { isLoading: loadingPeople, error: errorPeople, data } = useAllPeople();
+  const allPeople = useMemo(() => {
+    if (!data) return [];
+    return data.data.allPeople;
+  }, [data]);
 
-  const onFinish = ({ who, startDate, endDate }) => {
+  const { mutate: saveBooking } = useSaveBooking();
+  const { mutate: updateBooking } = useUpdateBooking();
+  const { mutate: deleteBooking } = useUpdateBooking(true);
+
+  const onFinish = ({ who, endDate, startDate }) => {
+    if (eventToEdit.key) {
+      const editEvent = {
+        id: eventToEdit.key,
+        data: {
+          who: {
+            connect: { id: who },
+          },
+          startDate: moment(startDate).format("yyyy-MM-DD"),
+          endDate: moment(endDate).format("yyyy-MM-DD"),
+        },
+      };
+      updateBooking(editEvent);
+      toggleEditModal();
+      return;
+    }
+
     const newEvent = {
       who: {
         connect: {
@@ -24,20 +44,13 @@ function BookForm({ addEvent, initialValues = {}, isEdit = false }) {
       endDate: moment(endDate).format("yyyy-MM-DD"),
     };
 
-    const people = allPeople.find((x) => x.id === who);
-    const localEvent = {
-      key: who,
-      who,
-      title: people.name,
-      start: moment(startDate).format("yyyy-MM-DD"),
-      end: moment(endDate).format("yyyy-MM-DD"),
-      allDay: true,
-      color: people.family.color,
-    };
-
     form.resetFields();
-    addEvent(localEvent);
     saveBooking(newEvent);
+  };
+
+  const deleteEvent = (id) => {
+    deleteBooking({ id });
+    toggleEditModal();
   };
 
   const peopleOptions = useMemo(
@@ -53,7 +66,7 @@ function BookForm({ addEvent, initialValues = {}, isEdit = false }) {
   );
 
   if (loadingPeople) return <p>Chargement des données...</p>;
-  if (errorPeople) return <p>{error}</p>;
+  if (errorPeople) return <p>{errorPeople}</p>;
 
   return (
     <Form
@@ -100,10 +113,15 @@ function BookForm({ addEvent, initialValues = {}, isEdit = false }) {
       >
         <DatePicker placeholder="Date de départ" format={"DD MMMM"} />
       </Form.Item>
-      {!isEdit && (
+      <Form.Item>
+        <Button type="primary" htmlType="submit">
+          Envoyer
+        </Button>
+      </Form.Item>
+      {eventToEdit.key && (
         <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Envoyer
+          <Button type="danger" onClick={() => deleteEvent(eventToEdit.key)}>
+            Supprimer
           </Button>
         </Form.Item>
       )}

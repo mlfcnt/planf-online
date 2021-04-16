@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import { isEmpty } from "lodash";
+import React, { useState, useEffect, useMemo } from "react";
 import styled from "styled-components";
 import { useAllBookings } from "../api/bookings";
 import BookForm from "../components/BookForm";
@@ -20,13 +21,18 @@ const FormContainer = styled.div`
 function Home() {
   const [events, setEvents] = useState([]);
   const {
-    loading: loadingBookings,
+    isLoading: loadingBookings,
     error: errorBookings,
-    allBookings,
+    data,
   } = useAllBookings();
 
+  const allBookings = useMemo(() => {
+    if (!data) return [];
+    return data.data.allBookings;
+  }, [data]);
+
   useEffect(() => {
-    if (!allBookings) return;
+    if (isEmpty(allBookings)) setEvents([]);
     setEvents(
       allBookings.map((e) => ({
         key: e.id,
@@ -40,13 +46,8 @@ function Home() {
     );
   }, [allBookings]);
 
-  const addEvent = useCallback((newEvent) => setEvents([...events, newEvent]), [
-    setEvents,
-    events,
-  ]);
-
   if (loadingBookings) return <p>Chargement des données...</p>;
-  if (errorBookings) return <p>{error}</p>;
+  if (errorBookings) return <p>{errorBookings}</p>;
 
   return (
     <>
@@ -55,7 +56,7 @@ function Home() {
       </CalendarContainer>
       <FormContainer>
         <Title>Réserver</Title>
-        <BookForm addEvent={addEvent} />
+        <BookForm />
       </FormContainer>
     </>
   );
