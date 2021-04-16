@@ -84,11 +84,6 @@ keystone.createList("Booking", {
     },
   },
   // List-level access controls
-  access: {
-    update: access.userIsAdminOrOwner,
-    delete: access.userIsAdmin,
-    auth: true,
-  },
 });
 
 keystone.createList("Family", {
