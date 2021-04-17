@@ -19,6 +19,10 @@ const MyApp = ({ Component, pageProps }) => {
       <Head>
         <title>Planf'Online</title>
         <link rel="shortcut icon" href="/favicon.png" />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#90cdf4" />
+        <link rel="apple-touch-icon" href="/logo-96x96.png" />
+        <meta name="apple-mobile-web-app-status-bar" content="#90cdf4" />
       </Head>
       <QueryClientProvider client={queryClientRef.current}>
         <MainLayout>
