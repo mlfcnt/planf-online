@@ -23,8 +23,10 @@ const MyApp = ({ Component, pageProps }) => {
           name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
         />
-        <meta name="description" content="Description" />
-        <meta name="keywords" content="Keywords" />
+        <meta
+          name="description"
+          content="Calendrier des disponibilités du chalet planfournier"
+        />
         <title>Planf'Online</title>
         <link rel="shortcut icon" href="/favicon.png" />
         <link rel="manifest" href="/manifest.json" />
