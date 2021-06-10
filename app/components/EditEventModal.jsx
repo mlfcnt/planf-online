@@ -3,10 +3,14 @@ import { Modal } from "antd";
 import BookForm from "./BookForm";
 import moment from "moment";
 
-function EditEventModal({ show, toggle, event }) {
+function EditEventModal({ show, toggle, event, setEvent }) {
   if (!event) return null;
+  const handleCancel = () => {
+    toggle();
+    setEvent(null);
+  };
   return (
-    <Modal title="Modifier le séjour" visible={show} onCancel={toggle} footer={null}>
+    <Modal title="Modifier le séjour" visible={show} onCancel={handleCancel} footer={null}>
       <BookForm
         initialValues={{
           who: event.who,

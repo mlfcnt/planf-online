@@ -69,7 +69,6 @@ function BookForm({ initialValues = {}, eventToEdit = {}, toggleEditModal }) {
 
   if (loadingPeople) return <p>Chargement des données...</p>;
   if (errorPeople) return <p>{errorPeople}</p>;
-
   return (
     <Form form={form} name="book" onFinish={onFinish} initialValues={initialValues}>
       <Form.Item

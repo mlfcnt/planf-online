@@ -39,7 +39,7 @@ export const Calendar = ({ events }) => {
       <BigCalendar
         localizer={localizer}
         events={events}
-        views={["month"]}
+        views={['month']}
         style={{ height: 500 }}
         messages={messages}
         popup
@@ -53,6 +53,7 @@ export const Calendar = ({ events }) => {
         show={showEditModal}
         toggle={toggleEditModal}
         event={selectedEvent}
+        setEvent={setSelectedEvent}
       />
     </>
   );
