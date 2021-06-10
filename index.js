@@ -63,16 +63,19 @@ keystone.createList("User", {
   },
 });
 
-keystone.createList("Booking", {
+keystone.createList('Booking', {
   fields: {
     who: {
       type: Relationship,
-      ref: "Person",
+      ref: 'Person',
       many: false,
     },
     startDate: {
       type: CalendarDay,
       isRequired: true,
+    },
+    comment: {
+      type: Text,
     },
     endDate: {
       type: CalendarDay,

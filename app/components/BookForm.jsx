@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { Form, Button, DatePicker, Select } from "antd";
+import { Form, Button, DatePicker, Select, Input } from 'antd';
 import { useSaveBooking, useUpdateBooking } from "../api/bookings";
 import moment from "moment";
 import { useAllPeople } from "../api/people";
@@ -17,7 +17,7 @@ function BookForm({ initialValues = {}, eventToEdit = {}, toggleEditModal }) {
   const { mutate: updateBooking } = useUpdateBooking();
   const { mutate: deleteBooking } = useUpdateBooking(true);
 
-  const onFinish = ({ who, endDate, startDate }) => {
+  const onFinish = ({ who, endDate, startDate, comment }) => {
     if (eventToEdit.key) {
       const editEvent = {
         id: eventToEdit.key,
@@ -25,8 +25,9 @@ function BookForm({ initialValues = {}, eventToEdit = {}, toggleEditModal }) {
           who: {
             connect: { id: who },
           },
-          startDate: moment(startDate).format("yyyy-MM-DD"),
-          endDate: moment(endDate).format("yyyy-MM-DD"),
+          comment,
+          startDate: moment(startDate).format('yyyy-MM-DD'),
+          endDate: moment(endDate).format('yyyy-MM-DD'),
         },
       };
       updateBooking(editEvent);
@@ -40,8 +41,9 @@ function BookForm({ initialValues = {}, eventToEdit = {}, toggleEditModal }) {
           id: who,
         },
       },
-      startDate: moment(startDate).format("yyyy-MM-DD"),
-      endDate: moment(endDate).format("yyyy-MM-DD"),
+      comment,
+      startDate: moment(startDate).format('yyyy-MM-DD'),
+      endDate: moment(endDate).format('yyyy-MM-DD'),
     };
 
     form.resetFields();
@@ -69,19 +71,14 @@ function BookForm({ initialValues = {}, eventToEdit = {}, toggleEditModal }) {
   if (errorPeople) return <p>{errorPeople}</p>;
 
   return (
-    <Form
-      form={form}
-      name="book"
-      onFinish={onFinish}
-      initialValues={initialValues}
-    >
+    <Form form={form} name="book" onFinish={onFinish} initialValues={initialValues}>
       <Form.Item
         label="Qui"
         name="who"
         rules={[
           {
             required: true,
-            message: "Veuillez préciser qui passe la réservation",
+            message: 'Veuillez préciser qui passe la réservation',
           },
         ]}
       >
@@ -99,7 +96,7 @@ function BookForm({ initialValues = {}, eventToEdit = {}, toggleEditModal }) {
           },
         ]}
       >
-        <DatePicker placeholder="Date d'arrivée" format={"DD MMMM"} />
+        <DatePicker placeholder="Date d'arrivée" format={'DD MMMM'} />
       </Form.Item>
       <Form.Item
         label="Départ"
@@ -107,11 +104,14 @@ function BookForm({ initialValues = {}, eventToEdit = {}, toggleEditModal }) {
         rules={[
           {
             required: true,
-            message: "Veuillez préciser la date de départ",
+            message: 'Veuillez préciser la date de départ',
           },
         ]}
       >
-        <DatePicker placeholder="Date de départ" format={"DD MMMM"} />
+        <DatePicker placeholder="Date de départ" format={'DD MMMM'} />
+      </Form.Item>
+      <Form.Item label="Commentaire (facultatif)" name='comment'>
+        <Input.TextArea />
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">

@@ -10,6 +10,7 @@ query{
         color
       }
     }
+    comment
     startDate
     endDate
   }
@@ -30,8 +31,8 @@ export const GET_ALL_PEOPLE = `
   `;
 
 export const SAVE_BOOKING = `
-mutation createBooking($who: PersonRelateToOneInput!, $startDate: String!, $endDate: String! ) {
-  createBooking(data: { who: $who, startDate: $startDate, endDate: $endDate }) {
+mutation createBooking($who: PersonRelateToOneInput!, $startDate: String!, $endDate: String!, $comment: String ) {
+  createBooking(data: { who: $who, startDate: $startDate, endDate: $endDate, comment: $comment }) {
      id
   who {
     id
@@ -41,6 +42,7 @@ mutation createBooking($who: PersonRelateToOneInput!, $startDate: String!, $endD
       color
     }
   }
+  comment
   startDate
   endDate
   }

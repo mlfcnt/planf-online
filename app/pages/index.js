@@ -38,11 +38,12 @@ function Home() {
         key: e.id,
         who: e.who.id,
         title: e.who.name,
+        comment: e.comment,
         start: e.startDate,
         end: e.endDate,
         allday: true,
         color: e.who.family.color,
-      }))
+      })),
     );
   }, [allBookings]);
 
