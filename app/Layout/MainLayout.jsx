@@ -15,7 +15,8 @@ export const MainLayout = ({ children }) => {
         <main style={{ padding: isDesktopOrLaptop ? '1.5rem' : '0rem' }}>{children}</main>
       </div>
       <Footer className="footer">
-        Remarques, suggestions, éloges: <a href='mailto:tommymartin1234@gmail.com'>tommymartin1234@gmail.com</a>
+        Remarques, suggestions, éloges :{' '}
+        <a href="mailto:tommymartin1234@gmail.com">tommymartin1234@gmail.com</a>
       </Footer>
     </>
   );
