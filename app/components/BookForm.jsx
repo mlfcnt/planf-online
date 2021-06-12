@@ -116,18 +116,20 @@ function BookForm({ initialValues = {}, eventToEdit = {}, toggleModal }) {
       <Form.Item label="Commentaire (facultatif)" name="comment">
         <Input.TextArea />
       </Form.Item>
-      <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Envoyer
-        </Button>
-      </Form.Item>
-      {eventToEdit.key && (
-        <Form.Item>
-          <Button type="danger" onClick={() => deleteEvent(eventToEdit.key)}>
-            Supprimer
-          </Button>
-        </Form.Item>
-      )}
+      <div style={{display : 'flex'}}>
+          <Form.Item style={{marginRight : '2vh'}}>
+            <Button type="primary" htmlType="submit">
+              Enregistrer
+            </Button>
+          </Form.Item>
+          {eventToEdit.key && (
+            <Form.Item>
+              <Button type="danger" onClick={() => deleteEvent(eventToEdit.key)}>
+                Supprimer la réservation
+              </Button>
+            </Form.Item>
+          )}
+      </div>
     </Form>
   );
 }
