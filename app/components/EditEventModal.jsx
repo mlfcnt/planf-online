@@ -19,7 +19,7 @@ function EditEventModal({ show, toggle, event, setEvent }) {
           comment: event.comment,
         }}
         eventToEdit={event}
-        toggleEditModal={toggle}
+        toggleModal={toggle}
       />
     </Modal>
   );

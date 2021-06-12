@@ -55,13 +55,19 @@ function Home() {
 
   return (
     <>
-      <div className='calendarContainer'>
+      <div className="calendarContainer">
         <Calendar events={events} />
       </div>
-      <Modal width={1000} title="Réservation" visible={showBookingModal} onCancel={handleCloseBookingModal} footer={null}>
-      <div className='formContainer'>
-        <BookForm />
-      </div>
+      <Modal
+        width={1000}
+        title="Réservation"
+        visible={showBookingModal}
+        onCancel={handleCloseBookingModal}
+        footer={null}
+      >
+        <div className="formContainer">
+          <BookForm toggleModal={handleCloseBookingModal} />
+        </div>
       </Modal>
     </>
   );

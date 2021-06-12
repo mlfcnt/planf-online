@@ -7,7 +7,7 @@ moment.locale("fr");
 const { Option } = Select;
 
 
-function BookForm({ initialValues = {}, eventToEdit = {}, toggleEditModal }) {
+function BookForm({ initialValues = {}, eventToEdit = {}, toggleModal }) {
   const [form] = Form.useForm();
   const { isLoading: loadingPeople, error: errorPeople, data } = useAllPeople();
   const allPeople = useMemo(() => {
@@ -33,7 +33,7 @@ function BookForm({ initialValues = {}, eventToEdit = {}, toggleEditModal }) {
         },
       };
       updateBooking(editEvent);
-      toggleEditModal();
+      toggleModal();
       return;
     }
 
@@ -50,11 +50,12 @@ function BookForm({ initialValues = {}, eventToEdit = {}, toggleEditModal }) {
 
     form.resetFields();
     saveBooking(newEvent);
+    toggleModal();
   };
 
   const deleteEvent = (id) => {
     deleteBooking({ id });
-    toggleEditModal();
+    toggleModal();
   };
 
   const peopleOptions = useMemo(
@@ -112,7 +113,7 @@ function BookForm({ initialValues = {}, eventToEdit = {}, toggleEditModal }) {
       >
         <DatePicker placeholder="Date de départ" format={'DD MMMM'} />
       </Form.Item>
-      <Form.Item label="Commentaire (facultatif)" name='comment'>
+      <Form.Item label="Commentaire (facultatif)" name="comment">
         <Input.TextArea />
       </Form.Item>
       <Form.Item>
