@@ -5,6 +5,8 @@ import 'moment/locale/fr';
 import EditEventModal from './EditEventModal';
 import { useToggle } from 'react-use';
 import { capitalize } from 'lodash';
+import { useRouter } from 'next/router';
+
 
 moment.locale('fr');
 
@@ -12,8 +14,10 @@ export const Calendar = ({ events }) => {
   const [showEditModal, toggleEditModal] = useToggle(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const localizer = momentLocalizer(moment);
+  const router = useRouter();
 
-  const currentMonth = capitalize(moment().format('MMMM'));;
+
+  const currentMonth = capitalize(moment().format('MMMM'));
   const messages = {
     allDay: 'Toute la journée',
     previous: 'Mois précédent',
@@ -49,6 +53,17 @@ export const Calendar = ({ events }) => {
         onSelectEvent={(e) => {
           setSelectedEvent(e);
           toggleEditModal();
+        }}
+        selectable
+        onSelectSlot={(e) => {
+          console.log(e);
+          router.replace({
+            pathname: '/',
+            query: {
+              reservation: moment(e.start).format('yyyy-MM-DD'),
+              end: moment(e.end).subtract(1, 'd').format('yyyy-MM-DD'),
+            },
+          });
         }}
       />
       <EditEventModal

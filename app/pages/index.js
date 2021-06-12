@@ -6,6 +6,7 @@ import { Calendar } from "../components/Calendar";
 import { Modal } from "antd";
 import { useRouter } from 'next/router';
 import { useToggle } from "react-use";
+import moment from 'moment';
 
 
 
@@ -30,7 +31,7 @@ function Home() {
       allBookings.map((e) => ({
         key: e.id,
         who: e.who.id,
-        title: e.who.name,
+        title: `${e.who.name} ${e.comment ? `- ${e.comment}` : ''}`,
         comment: e.comment,
         start: e.startDate,
         end: e.endDate,
@@ -66,7 +67,13 @@ function Home() {
         footer={null}
       >
         <div className="formContainer">
-          <BookForm toggleModal={handleCloseBookingModal} />
+          <BookForm
+            toggleModal={handleCloseBookingModal}
+            initialValues={{
+              startDate: router.query.reservation ? moment(router.query.reservation) : null,
+              endDate: router.query.end ? moment(router.query.end) : null,
+            }}
+          />
         </div>
       </Modal>
     </>

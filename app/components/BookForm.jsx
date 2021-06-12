@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import { Form, Button, DatePicker, Select, Input } from 'antd';
 import { useSaveBooking, useUpdateBooking } from "../api/bookings";
 import moment from "moment";
@@ -18,6 +18,10 @@ function BookForm({ initialValues = {}, eventToEdit = {}, toggleModal }) {
   const { mutate: saveBooking } = useSaveBooking();
   const { mutate: updateBooking } = useUpdateBooking();
   const { mutate: deleteBooking } = useUpdateBooking(true);
+
+  useEffect(() => {
+    form.setFieldsValue(initialValues)
+   }, [form, initialValues])
 
   const onFinish = ({ who, endDate, startDate, comment }) => {
     if (eventToEdit.key) {
@@ -54,8 +58,11 @@ function BookForm({ initialValues = {}, eventToEdit = {}, toggleModal }) {
   };
 
   const deleteEvent = (id) => {
-    deleteBooking({ id });
-    toggleModal();
+    // const confirm = window.confirm('Êtes-vous sûr de vouloir supprimer cette réservation ?');
+    // if (confirm === true) {
+      deleteBooking({ id });
+      toggleModal();
+    // } else return;
   };
 
   const peopleOptions = useMemo(
@@ -73,6 +80,7 @@ function BookForm({ initialValues = {}, eventToEdit = {}, toggleModal }) {
 
   if (loadingPeople) return <p>Chargement des données...</p>;
   if (errorPeople) return <p>{errorPeople}</p>;
+
   return (
     <Form form={form} name="book" onFinish={onFinish} initialValues={initialValues}>
       <Form.Item
@@ -96,6 +104,7 @@ function BookForm({ initialValues = {}, eventToEdit = {}, toggleModal }) {
           {
             required: true,
             message: "Veuillez préciser la date d'arrivée",
+
           },
         ]}
       >
@@ -108,7 +117,7 @@ function BookForm({ initialValues = {}, eventToEdit = {}, toggleModal }) {
           {
             required: true,
             message: 'Veuillez préciser la date de départ',
-          },
+          }
         ]}
       >
         <DatePicker placeholder="Date de départ" format={'DD MMMM'} />

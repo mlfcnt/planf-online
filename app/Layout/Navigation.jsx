@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'antd';
 import { useRouter } from 'next/router';
+import moment from 'moment';
 
 export const Navigation = () => {
   const router = useRouter();
@@ -15,7 +16,7 @@ export const Navigation = () => {
           router.replace({
             pathname: '/',
             query: {
-              reservation: true,
+              reservation: moment().format('yyyy-MM-DD'),
             },
           })
         }
