@@ -16,7 +16,7 @@ export const MainLayout = ({ children }) => {
       </div>
       <Footer className="footer">
         Remarques, suggestions, éloges :{' '}
-        <a href="mailto:tommymartin1234@gmail.com">tommymartin1234@gmail.com</a>
+        <a href="mailto:tommymartin1234@gmail.com">tommymartin1234@gmail.com</a> ❤️
       </Footer>
     </>
   );
