@@ -49,3 +49,11 @@ main {
   background-color : #fff;
   opacity: 0.9;
 }
+
+.footer {
+  text-align: center;
+  position: fixed;
+  bottom: 0vh;
+  width: 100vw;
+  padding: 10px;
+}
