@@ -9,12 +9,14 @@ export const MainLayout = ({ children }) => {
 
   return (
     <>
-    <div className="mainContainer" style={{ maxWidth: isDesktopOrLaptop ? '70%' : '100%' }}>
-      <h1 className="mainTitle">Planf'Online</h1>
-      <Navigation />
-      <main style={{ padding: isDesktopOrLaptop ? '1.5rem' : '0rem' }}>{children}</main>
-    </div>
-      <Footer className='footer'>N'hésitez pas à m'envoyer vos suggestions @ tommymartin1234@gmail.com</Footer>
-      </>
+      <div className="mainContainer" style={{ maxWidth: isDesktopOrLaptop ? '70%' : '100%' }}>
+        <h1 className="mainTitle">Planf'Online</h1>
+        <Navigation />
+        <main style={{ padding: isDesktopOrLaptop ? '1.5rem' : '0rem' }}>{children}</main>
+      </div>
+      <Footer className="footer">
+        Remarques, suggestions, éloges: <a href='mailto:tommymartin1234@gmail.com'>tommymartin1234@gmail.com</a>
+      </Footer>
+    </>
   );
 }
