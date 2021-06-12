@@ -1,25 +1,18 @@
 import { isEmpty } from "lodash";
 import React, { useState, useEffect, useMemo } from "react";
-import styled from "styled-components";
 import { useAllBookings } from "../api/bookings";
 import BookForm from "../components/BookForm";
 import { Calendar } from "../components/Calendar";
+import { Modal } from "antd";
+import { useRouter } from 'next/router';
+import { useToggle } from "react-use";
 
-const CalendarContainer = styled.div`
-  margin-bottom: 3vh !important;
-`;
-const Title = styled.div`
-  font-size: 2rem !important;
-  margin-bottom: 1vh !important;
-`;
 
-const FormContainer = styled.div`
-  max-width: 50%;
-  margin: auto;
-`;
 
 function Home() {
+  const router = useRouter();
   const [events, setEvents] = useState([]);
+  const [showBookingModal, toggleBookingModal] = useToggle(false)
   const {
     isLoading: loadingBookings,
     error: errorBookings,
@@ -47,18 +40,29 @@ function Home() {
     );
   }, [allBookings]);
 
+  useEffect(() => {
+    if (!router.query.reservation) return;
+    toggleBookingModal(true);
+  }, [router.query.reservation])
+
   if (loadingBookings) return <p>Chargement des données...</p>;
   if (errorBookings) return <p>{errorBookings}</p>;
 
+  const handleCloseBookingModal = () => {
+    toggleBookingModal(false);
+    router.replace('/')
+  }
+
   return (
     <>
-      <CalendarContainer>
+      <div className='calendarContainer'>
         <Calendar events={events} />
-      </CalendarContainer>
-      <FormContainer>
-        <Title>Réserver</Title>
+      </div>
+      <Modal width={1000} title="Réservation" visible={showBookingModal} onCancel={handleCloseBookingModal} footer={null}>
+      <div className='formContainer'>
         <BookForm />
-      </FormContainer>
+      </div>
+      </Modal>
     </>
   );
 }

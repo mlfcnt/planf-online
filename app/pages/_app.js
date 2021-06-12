@@ -1,6 +1,7 @@
 import "antd/dist/antd.css";
 import "../styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import React from 'react';
 import Head from "next/head";
 import { ConfigProvider } from "antd";
 import locale from "antd/lib/locale/fr_FR";

@@ -34,11 +34,13 @@
     "moment": "^2.29.1",
     "next-pwa": "^5.2.9",
     "react-big-calendar": "^0.33.2",
+    "react-parallax": "^3.3.0",
     "react-query": "^3.13.7",
-    "react-use": "^17.2.3",
-    "styled-components": "^5.2.3"
+    "react-responsive": "^8.2.0",
+    "react-use": "^17.2.3"
   },
   "devDependencies": {
-    "eslint": "^7.24.0"
+    "eslint": "^7.28.0",
+    "eslint-plugin-react": "^7.24.0"
   }
 }

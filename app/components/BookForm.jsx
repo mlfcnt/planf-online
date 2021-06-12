@@ -4,6 +4,8 @@ import { useSaveBooking, useUpdateBooking } from "../api/bookings";
 import moment from "moment";
 import { useAllPeople } from "../api/people";
 moment.locale("fr");
+const { Option } = Select;
+
 
 function BookForm({ initialValues = {}, eventToEdit = {}, toggleEditModal }) {
   const [form] = Form.useForm();
@@ -61,10 +63,11 @@ function BookForm({ initialValues = {}, eventToEdit = {}, toggleEditModal }) {
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((people) => (
           <Option
+            key={people.id}
             value={people.id}
           >{`${people.name} ${people.family.name}`}</Option>
         )),
-    [allPeople]
+    [allPeople],
   );
 
   if (loadingPeople) return <p>Chargement des données...</p>;

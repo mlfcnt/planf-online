@@ -1,3 +1,51 @@
+@font-face {
+  font-family: "Bacalisties";
+  src: url("/fonts/Bacalisties.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* html { font-size: calc(1em + 1vw) } */
+
+
+
 body {
-  /* background-color: black; */
+  background-image: url(https://images.unsplash.com/photo-1573126617899-41f1dffb196c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80);
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.mainContainer {
+  margin-top: 3vh !important;
+  padding-top: 3vh !important;
+  margin: auto !important;
+  /* background: rgba(170, 166, 190, 0.356); */
+  padding : 2vw
+}
+
+.mainTitle {
+  font-size: 6vh !important;
+  font-family: Bacalisties;
+  text-align: center !important;
+  color: white;
+}
+
+.calendarContainer {
+  margin-bottom: 3vh !important;
+}
+
+.indexTitle {
+  font-size: 2rem !important;
+  margin-bottom: 1vh !important;
+}
+
+.formContainer {
+  max-width: 50%;
+  margin: auto;
+}
+
+main {
+  background-color : #fff;
+  opacity: 0.85;
 }

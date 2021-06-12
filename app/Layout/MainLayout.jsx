@@ -1,23 +1,16 @@
 import React from "react";
-import styled from "styled-components";
+import { Navigation } from './Navigation';
+import { useMediaQuery } from 'react-responsive'
 
-const Container = styled.div`
-  margin-top: 3vh !important;
-  padding-top: 3vh !important;
-  max-width: 70% !important;
-  margin: auto !important;
-`;
-
-const Title = styled.h1`
-  font-size: 3rem !important;
-  text-align: center !important;
-`;
 
 export const MainLayout = ({ children }) => {
+  const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1224 })
+
   return (
-    <Container>
-      <Title>Planf'Online</Title>
-      {children}
-    </Container>
+    <div className="mainContainer" style={{maxWidth : isDesktopOrLaptop ? '70%' : '100%'}}>
+      <h1 className="mainTitle">Planf'Online</h1>
+      <Navigation />
+      <main style={{padding : isDesktopOrLaptop ? '1.5rem' : '0rem'}}>{children}</main>
+    </div>
   );
-};
+}
