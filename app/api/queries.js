@@ -72,6 +72,7 @@ export const GET_ALL_TASKS = `
       id
       name
       createdBy {
+        id
         name
       }
       createdAt

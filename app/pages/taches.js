@@ -30,6 +30,7 @@ function todo() {
     updateTask({
       id: task.id,
       data: {
+        createdBy: { connect: { id: task.createdBy.id } },
         isArchived: true,
       },
     });
