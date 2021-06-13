@@ -41,7 +41,11 @@ export const Navigation = () => {
       >
         <>
           <span>Tâches / courses à faire</span>{' '}
-          {currentTasksLength > 0 && <Tag color="processing">{currentTasksLength}</Tag>}
+          {currentTasksLength > 0 && (
+            <Tag color="processing" style={{ verticalAlign: 'text-top', marginRight: '5px' }}>
+              {currentTasksLength}
+            </Tag>
+          )}
         </>
       </Button>
     </div>
