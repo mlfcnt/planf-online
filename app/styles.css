@@ -21,7 +21,7 @@ body {
   padding-top: 3vh !important;
   margin: auto !important;
   /* background: rgba(170, 166, 190, 0.356); */
-  padding : 2vw
+  padding : 2vw;
 }
 
 .mainTitle {
@@ -49,6 +49,8 @@ main {
   background-color : #fff;
   opacity: 0.9;
   margin-bottom: 15vh;
+  min-height: 30vh;
+
 }
 
 .footer {

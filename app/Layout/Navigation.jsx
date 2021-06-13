@@ -5,6 +5,22 @@ import moment from 'moment';
 
 export const Navigation = () => {
   const router = useRouter();
+  const isHomepage = router.pathname === '/'
+
+  const handleRedirect = () => {
+    if (isHomepage) {
+      router.replace({
+        pathname: '/',
+        query: {
+          reservation: moment().format('yyyy-MM-DD'),
+        },
+      })
+   }
+   router.push({
+    pathname: '/',
+  })
+
+  }
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '5vh' }}>
@@ -12,28 +28,20 @@ export const Navigation = () => {
         size="large"
         ghost
         style={{ marginRight: '3vw' }}
-        onClick={() =>
-          router.replace({
-            pathname: '/',
-            query: {
-              reservation: moment().format('yyyy-MM-DD'),
-            },
-          })
-        }
+        onClick={handleRedirect}
       >
-        Réserver
+       {isHomepage ? 'Réserver' : 'Calendrier'  }
       </Button>
       <Button
         size="large"
         ghost
-        disabled
         onClick={() =>
           router.push({
-            pathname: '/todo',
+            pathname: '/taches',
           })
         }
       >
-        Todo List (en construction...)
+        Tâches / courses à faire
       </Button>
     </div>
   );

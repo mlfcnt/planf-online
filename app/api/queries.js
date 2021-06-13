@@ -64,3 +64,37 @@ mutation deleteBooking($id: ID!){
   }
 }
 `;
+
+
+export const GET_ALL_TASKS = `
+  query{
+    allTasks {
+      id
+      name
+      createdBy {
+        name
+      }
+      createdAt
+      isArchived
+    }
+  }
+  `;
+
+export const UPDATE_TASK = `
+mutation updateTask($id: ID!, $data: TaskUpdateInput!){
+  updateTask(id: $id, data: $data) {
+    id
+  }
+}
+`;
+
+export const SAVE_TASK = `
+mutation createTask($name: String!, $createdBy: PersonRelateToOneInput!) {
+  createTask(data: {name : $name, createdBy: $createdBy }) {
+     name
+  createdBy {
+    id
+  }
+  }
+}
+`;

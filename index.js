@@ -5,10 +5,10 @@ const {
   Text,
   Checkbox,
   Password,
-  DateTime,
   CalendarDay,
   Relationship,
-} = require("@keystonejs/fields");
+  DateTime,
+} = require('@keystonejs/fields');
 
 const { PROJECT_NAME } = require("./config/general");
 const { keystone } = require("./config/general");
@@ -119,6 +119,22 @@ keystone.createList("Person", {
       ref: "Family",
       many: false,
     },
+  },
+
+  // List-level access controls
+  access: {
+    update: access.userIsAdminOrOwner,
+    delete: access.userIsAdmin,
+    auth: true,
+  },
+});
+
+keystone.createList('Task', {
+  fields: {
+    name: { type: Text, isRequired: true },
+    createdBy: { type: Relationship, ref: 'Person', isRequired: true, many: false },
+    createdAt: { type: DateTime, defaultValue: new Date().toISOString() },
+    isArchived: { type: Checkbox, defaultValue: false },
   },
 
   // List-level access controls
