@@ -1,6 +1,6 @@
-const { GraphQLApp } = require("@keystonejs/app-graphql");
-const { AdminUIApp } = require("@keystonejs/app-admin-ui");
-const { NextApp } = require("@keystonejs/app-next");
+const { GraphQLApp } = require('@keystonejs/app-graphql');
+const { AdminUIApp } = require('@keystonejs/app-admin-ui');
+const { NextApp } = require('@keystonejs/app-next');
 const {
   Text,
   Checkbox,
@@ -10,13 +10,12 @@ const {
   DateTime,
 } = require('@keystonejs/fields');
 
-const { PROJECT_NAME } = require("./config/general");
-const { keystone } = require("./config/general");
-const { PasswordAuthStrategy } = require("@keystonejs/auth-password");
+const { PROJECT_NAME } = require('./config/general');
+const { keystone } = require('./config/general');
+const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
 
 // Access control functions
-const userIsAdmin = ({ authentication: { item: user } }) =>
-  Boolean(user && user.isAdmin);
+const userIsAdmin = ({ authentication: { item: user } }) => Boolean(user && user.isAdmin);
 const userOwnsItem = ({ authentication: { item: user } }) => {
   if (!user) {
     return false;
@@ -34,7 +33,7 @@ const userIsAdminOrOwner = (auth) => {
 
 const access = { userIsAdmin, userOwnsItem, userIsAdminOrOwner };
 
-keystone.createList("User", {
+keystone.createList('User', {
   fields: {
     name: { type: Text },
     email: {
@@ -89,12 +88,12 @@ keystone.createList('Booking', {
   // List-level access controls
 });
 
-keystone.createList("Family", {
+keystone.createList('Family', {
   fields: {
     name: { type: Text, isRequired: true },
     members: {
       type: Relationship,
-      ref: "Person",
+      ref: 'Person',
       many: true,
     },
     color: {
@@ -111,12 +110,12 @@ keystone.createList("Family", {
   },
 });
 
-keystone.createList("Person", {
+keystone.createList('Person', {
   fields: {
     name: { type: Text, isRequired: true },
     family: {
       type: Relationship,
-      ref: "Family",
+      ref: 'Family',
       many: false,
     },
   },
@@ -136,19 +135,12 @@ keystone.createList('Task', {
     createdAt: { type: DateTime, defaultValue: new Date().toISOString() },
     isArchived: { type: Checkbox, defaultValue: false },
   },
-
-  // List-level access controls
-  access: {
-    update: access.userIsAdminOrOwner,
-    delete: access.userIsAdmin,
-    auth: true,
-  },
 });
 
 const authStrategy = keystone.createAuthStrategy({
   type: PasswordAuthStrategy,
-  list: "User",
-  config: { protectIdentities: process.env.NODE_ENV === "production" },
+  list: 'User',
+  config: { protectIdentities: process.env.NODE_ENV === 'production' },
 });
 
 module.exports = {
@@ -157,13 +149,13 @@ module.exports = {
     new GraphQLApp(),
     new AdminUIApp({
       name: PROJECT_NAME,
-      adminPath: "/admin",
+      adminPath: '/admin',
       authStrategy,
     }),
-    new NextApp({ dir: "app" }),
+    new NextApp({ dir: 'app' }),
   ],
-  distDir: "dist",
+  distDir: 'dist',
   configureExpress: (app) => {
-    app.set("trust proxy", 1);
+    app.set('trust proxy', 1);
   },
 };

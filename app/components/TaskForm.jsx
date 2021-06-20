@@ -32,7 +32,6 @@ export const TaskForm = ({ show, toggle }) => {
   if (loadingPeople) return <p>Chargement...</p>;
 
   const onFinish = ({ name, createdBy }) => {
-    console.log({ name, createdBy });
     try {
       saveTask({
         name,
