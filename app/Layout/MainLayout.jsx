@@ -24,10 +24,10 @@ export const MainLayout = ({ children }) => {
         <Navigation />
         <main style={{ padding: isDesktopOrLaptop ? '1.5rem' : '0rem' }}>{children}</main>
       </div>
-//      <Footer className="footer">
-//        Remarques, suggestions, invitations pour manger du lapin :{' '}
-//        <a href="mailto:tommymartin1234@gmail.com">tommymartin1234@gmail.com</a>
-//      </Footer>
+      {/* <Footer className="footer">
+       Remarques, suggestions, invitations pour manger du lapin :{' '}
+        <a href="mailto:tommymartin1234@gmail.com">tommymartin1234@gmail.com</a>
+      </Footer> */}
     </>
   );
 };
