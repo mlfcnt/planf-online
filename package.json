@@ -11,13 +11,14 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=17"
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development DISABLE_LOGGING=true keystone dev",
     "build": "cross-env NODE_ENV=production keystone build",
     "start": "cross-env NODE_ENV=production keystone start",
-    "create-tables": "cross-env CREATE_TABLES=true keystone create-tables"
+    "create-tables": "cross-env CREATE_TABLES=true keystone create-tables",
+    "deploy": "git push heroku main:main"
   },
   "dependencies": {
     "@keystonejs/adapter-mongoose": "^11.1.0",
